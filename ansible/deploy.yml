@@ -1,0 +1,24 @@
+---
+
+- name: Deploy webmail app
+  hosts: all
+  gather_facts: false
+
+  vars:
+    imap_url: ''
+    imap_port: ''
+
+  tasks:
+    - name: Install webmail
+      docker_container:
+        name: webmail
+        hostname: webmail
+        image: webmail
+        state: started
+        restart: yes
+        restart_policy: always
+        ports:
+          - "8080:80"
+        env:
+          ROUNDCUBEMAIL_DEFAULT_HOST: "{{ imap_url }}"
+          ROUNDCUBEMAIL_DEFAULT_PORT: "{{ imap_port }}"

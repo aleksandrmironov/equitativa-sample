@@ -1,0 +1,53 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Add an apt key by id from a keyserver
+      apt_key:
+        keyserver: hkp://p80.pool.sks-keyservers.net:80
+        id: 58118E89F3A912897C070ADBF76221572C52609D
+
+    - name: add docker repo
+      apt_repository:
+        repo: deb https://apt.dockerproject.org/repo ubuntu-trusty main
+        state: present
+
+    - name: Install apt pkgs
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+      with_items:
+        - 'docker-engine'
+        - 'python-pip'
+
+    - name: install pip pkgs
+      pip:
+        name: "docker-py"
+
+    - name: Change docker socker perms
+      file:
+        path: /var/run/docker.sock
+        mode: 0666
+
+    - name: Clone git repo
+      git:
+        repo: 'https://github.com/aleksandrmironov/docker-jenkins-dsl-ready.git'
+        dest: /home/vagrant/docker-jenkins-dsl-ready
+
+    - name: build jenkins image
+      docker_image:
+         path: /home/vagrant/docker-jenkins-dsl-ready
+         name: jenkins-dsl-ready
+
+    - name: jenkins container
+      docker:
+        name: jenkins
+        image: jenkins-dsl-ready
+        state: reloaded
+        pull: missing
+        volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+        - "/usr/bin/docker:/usr/bin/docker"
+        ports:
+        - "8081:8080"
