@@ -28,3 +28,6 @@ Finally you will have jenkinsCI web interface available at http://localhost:8081
 You will have **equitativa-build** job available. Just press *build* (first run will be started automatically) to run the pipeline. Finally you will have the webmail app built and
 available at http://localhost:8080.
 
+Build parameters:
+* imap_url (ssl://imap.gmail.com default)
+* imap_port (993 default)
