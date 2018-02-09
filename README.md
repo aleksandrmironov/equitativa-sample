@@ -1,4 +1,4 @@
-# Sample CI pipeline for fetchr
+# Sample CI pipeline for equitativa
 
 #Tool stack
 
@@ -16,8 +16,8 @@ Requirements: vagrant (tested w/ vagrant==2.0.1 and virtualbox==5.1.30 at MacOS 
 Shell steps:
 
 ```bash
-$ git clone https://github.com/aleksandrmironov/fetchr-samples.git
-$ cd fetchr-samples/vagrant 
+$ git clone https://github.com/aleksandrmironov/equitativa-sample.git
+$ cd equitativa-sample/vagrant 
 $ vagrant up
 ```
 
@@ -25,7 +25,6 @@ Finally you will have jenkinsCI web interface available at http://localhost:8081
 
 ##Step 2: The pipeline
 
-You will have **fetchr-build** job available. Just press *build* or make changes
-in hello-world.git to run the pipeline. Finally you will have the app built and
+You will have **equitativa-build** job available. Just press *build* (first run will be started automatically) to run the pipeline. Finally you will have the webmail app built and
 available at http://localhost:8080.
 
